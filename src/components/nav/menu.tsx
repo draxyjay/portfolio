@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouteMatch } from 'react-router-dom';
-import { Links } from '../../App';
+import { Links } from '../../app';
 import { MenuContainer, MenuLinkContainer, MenuLinkStyle } from './menu.style';
 
 type MenuLinkProps = {
