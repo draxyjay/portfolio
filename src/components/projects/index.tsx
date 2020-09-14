@@ -1,5 +1,4 @@
-import React from 'react';
-import { useQuery, gql } from '@apollo/client';
+import React, { useEffect, useState } from 'react';
 import {
 	ProjectsContainer,
 	Project,
@@ -11,95 +10,39 @@ import {
 	ProjectGitLink,
 } from './projects.style';
 import { GitHub } from 'react-feather';
+import GithubService from '../../services/githubService';
+import { IGithubRepo } from '../../services/types';
 
-interface GitHubReposityTopic {
-	name: string;
-}
+type ProjectsProps = {
+	githubService: GithubService;
+};
 
-interface GitHubReposityTopicNode {
-	topic: GitHubReposityTopic;
-}
+const Projects = ({ githubService }: ProjectsProps) => {
+	const [repos, setRepos] = useState<IGithubRepo[]>([]);
 
-interface GitHubReposityTopicEdge {
-	node: GitHubReposityTopicNode;
-}
+	useEffect(() => {
+		fetchRepos();
+	}, []);
 
-interface GitHubReposityTopics {
-	edges: GitHubReposityTopicEdge[];
-}
-
-interface GithubRepository {
-	name: string;
-	description: string;
-	updatedAt: Date;
-	url: string;
-	repositoryTopics: GitHubReposityTopics;
-}
-
-interface GithubRepositoriesEdges {
-	node: GithubRepository;
-}
-
-interface GithubRepositories {
-	edges: GithubRepositoriesEdges[];
-}
-
-interface GitHubUser {
-	repositories: GithubRepositories;
-}
-
-interface GithubRepositoriesQuery {
-	user: GitHubUser;
-}
-
-const GET_GITHUB_REPOSITORIES = gql`
-	query GetGithubRepositories {
-		user(login: "draxyjay") {
-			repositories(first: 10, isFork: false) {
-				edges {
-					node {
-						name
-						description
-						updatedAt
-						url
-						repositoryTopics(first: 5) {
-							edges {
-								node {
-									topic {
-										name
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-`;
-
-const Projects = () => {
-	const { data } = useQuery<GithubRepositoriesQuery, any>(
-		GET_GITHUB_REPOSITORIES
-	);
-	console.log(data);
+	const fetchRepos = async () => {
+		const newRepos = await githubService.getReposWithTopics();
+		setRepos(newRepos);
+	};
 
 	return (
 		<ProjectsContainer>
-			{data?.user.repositories.edges.map((edge) => (
-				<Project>
+			{repos.map((repo) => (
+				<Project key={`${repo.name}-${repo.updated_at}`}>
 					<ProjectDate>
-						{new Date(edge.node.updatedAt).getFullYear()}
+						{new Date(repo.updated_at).getFullYear()}
 					</ProjectDate>
-					<ProjectName>{edge.node.name}</ProjectName>
-					<ProjectDescription>
-						{edge.node.description}
-					</ProjectDescription>
+					<ProjectName>{repo.name}</ProjectName>
+					<ProjectDescription>{repo.description}</ProjectDescription>
 					<ProjectTopics>
-						{edge.node.repositoryTopics.edges.map((topic) => (
-							<ProjectTopic>{topic.node.topic.name}</ProjectTopic>
+						{repo.topics?.names.map((topic) => (
+							<ProjectTopic key={topic}>{topic}</ProjectTopic>
 						))}
-						<ProjectGitLink target='_blank' href={edge.node.url}>
+						<ProjectGitLink target='_blank' href={repo.html_url}>
 							<GitHub size={16} />
 						</ProjectGitLink>
 					</ProjectTopics>
@@ -107,6 +50,10 @@ const Projects = () => {
 			))}
 		</ProjectsContainer>
 	);
+};
+
+Projects.defaultProps = {
+	githubService: new GithubService(),
 };
 
 export default Projects;

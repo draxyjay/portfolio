@@ -9,7 +9,7 @@ import {
 import Menu from './menu';
 import { MenuAnimation } from './menu.animation';
 import { useLocation } from 'react-router-dom';
-import { Links } from '../../App';
+import { Links } from '../../app';
 
 const Nav = () => {
 	const location = useLocation();
