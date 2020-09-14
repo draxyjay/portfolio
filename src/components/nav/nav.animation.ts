@@ -1,7 +1,7 @@
 import anime from 'animejs';
 import { RefObject } from 'react';
 
-const showMenu = (navRef: React.RefObject<HTMLDivElement>) =>
+export const slideInMenu = (navRef: React.RefObject<HTMLElement>) =>
 	anime({
 		targets: navRef.current,
 		easing: 'easeOutQuad',
@@ -10,21 +10,19 @@ const showMenu = (navRef: React.RefObject<HTMLDivElement>) =>
 		delay: 7000,
 	});
 
-type MenuAnimationProps = {
+type BurgerAnimationProps = {
 	burgerRectRef: RefObject<HTMLDivElement>;
 	burgerRectRef1: RefObject<HTMLDivElement>;
 	burgerRectRef2: RefObject<HTMLDivElement>;
 	burgerRectRef3: RefObject<HTMLDivElement>;
-	menuRef: RefObject<HTMLDivElement>;
 };
 
-const openMenu = ({
+export const burgerToCross = ({
 	burgerRectRef,
 	burgerRectRef1,
 	burgerRectRef2,
 	burgerRectRef3,
-	menuRef,
-}: MenuAnimationProps) => {
+}: BurgerAnimationProps) => {
 	const tl = anime
 		.timeline({
 			easing: 'easeOutQuad',
@@ -54,41 +52,21 @@ const openMenu = ({
 		.add({
 			targets: [burgerRectRef2.current, burgerRectRef3.current],
 			backgroundColor: '#f7f7df',
-		})
-		.add(
-			{
-				targets: menuRef.current,
-				translateY: [-window.innerHeight, 0],
-				opacity: [0, 1],
-				easing: 'spring(1, 80, 10, 0)',
-				duration: 1000,
-			},
-			750
-		);
+		});
 
 	if (tl.began || !tl.completed) return false;
 	tl.play();
 };
 
-const closeMenu = ({
+export const crossToBurger = ({
 	burgerRectRef,
 	burgerRectRef1,
 	burgerRectRef2,
 	burgerRectRef3,
-	menuRef,
-}: MenuAnimationProps): Promise<void> => {
+}: BurgerAnimationProps) => {
 	const tl = anime
 		.timeline({
 			easing: 'easeOutQuad',
-		})
-		.add({
-			targets: menuRef.current,
-			translateY: [0, -window.innerHeight],
-			duration: 1000,
-		})
-		.add({
-			targets: menuRef.current,
-			opacity: [1, 0],
 		})
 		.add(
 			{
@@ -123,8 +101,4 @@ const closeMenu = ({
 		);
 
 	tl.play();
-
-	return tl.finished;
 };
-
-export const MenuAnimation = { showMenu, openMenu, closeMenu };
