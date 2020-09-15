@@ -1,7 +1,8 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './app.css';
-import { AppContainer } from './app.style';
+import { AppContainer, RouterContainer } from './app.style';
+import Footer from './components/footer';
 import LogoSpinner from './components/logospinner';
 import Nav from './components/nav';
 
@@ -19,21 +20,24 @@ export const Links = [
 
 const App = () => (
 	<AppContainer>
-		<Router>
-			<Nav />
-			<Suspense fallback={<LogoSpinner />}>
-				<Switch>
-					{Links.map((link, i) => (
-						<Route
-							key={link.path}
-							exact={i === 0}
-							path={link.path}
-							component={link.component}
-						/>
-					))}
-				</Switch>
-			</Suspense>
-		</Router>
+		<RouterContainer>
+			<Router>
+				<Nav />
+				<Suspense fallback={<LogoSpinner />}>
+					<Switch>
+						{Links.map((link, i) => (
+							<Route
+								key={link.path}
+								exact={i === 0}
+								path={link.path}
+								component={link.component}
+							/>
+						))}
+					</Switch>
+				</Suspense>
+			</Router>
+		</RouterContainer>
+		<Footer />
 	</AppContainer>
 );
 
