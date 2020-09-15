@@ -8,7 +8,6 @@ export const Navigation = styled.nav`
 	margin-right: 20px;
 
 	width: 50px;
-	height: 100%;
 
 	@media ${device.tablet} {
 		width: 100%;
@@ -51,9 +50,7 @@ export const VerticalText = styled.div`
 	top: 50%;
 	height: 10em;
 	margin-top: -5em;
-
 	width: 30px;
-	height: 100%;
 
 	font-style: normal;
 	font-weight: normal;

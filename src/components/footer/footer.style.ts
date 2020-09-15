@@ -5,8 +5,7 @@ export const FooterContainer = styled.div`
 	height: 25px;
 	line-height: 25px;
 
-	background-color: #238b95;
-	color: #f7f7df;
+	color: #c4c4c4;
 
 	font-size: 12px;
 	letter-spacing: 0.1em;

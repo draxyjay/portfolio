@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './app.css';
-import { AppContainer, RouterContainer } from './app.style';
+import { AppContainer } from './app.style';
 import Footer from './components/footer';
 import LogoSpinner from './components/logospinner';
 import Nav from './components/nav';
@@ -19,8 +19,8 @@ export const Links = [
 ];
 
 const App = () => (
-	<AppContainer>
-		<RouterContainer>
+	<>
+		<AppContainer>
 			<Router>
 				<Nav />
 				<Suspense fallback={<LogoSpinner />}>
@@ -36,9 +36,9 @@ const App = () => (
 					</Switch>
 				</Suspense>
 			</Router>
-		</RouterContainer>
+		</AppContainer>
 		<Footer />
-	</AppContainer>
+	</>
 );
 
 export default App;
