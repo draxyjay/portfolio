@@ -1,12 +1,19 @@
 import styled from 'styled-components';
+import { device } from '../../utils/deviceUtils';
 
 export const Navigation = styled.nav`
-	width: 50px;
-	height: 100%;
 	display: flex;
 	flex-direction: column;
 	padding: 20px;
 	margin-right: 20px;
+
+	width: 50px;
+	height: 100%;
+
+	@media ${device.tablet} {
+		width: 100%;
+		height: 60px;
+	}
 `;
 
 export const Hamburger = styled.div`
@@ -33,6 +40,10 @@ export const BurgerSlice = styled.div`
 export const VerticalTextContainer = styled.div`
 	position: relative;
 	height: 100%;
+
+	@media ${device.tablet} {
+		display: none;
+	}
 `;
 
 export const VerticalText = styled.div`

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const HomeContainer = styled.div`
 	width: 100%;
 	height: 100%;
-	margin-left: -50px;
+	padding: 10px;
 
 	display: flex;
 	flex-direction: column;
@@ -22,7 +22,7 @@ export const Name = styled.div`
 `;
 
 export const Description = styled.div`
-	width: 400px;
+	max-width: 400px;
 	margin-top: 20px;
 
 	font-size: 16px;

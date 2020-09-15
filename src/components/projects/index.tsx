@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
 	ProjectsContainer,
 	Project,
@@ -12,6 +12,7 @@ import {
 import { GitHub } from 'react-feather';
 import GithubService from '../../services/githubService';
 import { IGithubRepo } from '../../services/types';
+import { showProjects } from './projects.animation';
 
 type ProjectsProps = {
 	githubService: GithubService;
@@ -20,8 +21,10 @@ type ProjectsProps = {
 const Projects = ({ githubService }: ProjectsProps) => {
 	const [repos, setRepos] = useState<IGithubRepo[]>([]);
 
+	const container = useRef<HTMLDivElement>(null);
+
 	useEffect(() => {
-		fetchRepos();
+		fetchRepos().then(() => showProjects(container));
 	}, []);
 
 	const fetchRepos = async () => {
@@ -30,7 +33,7 @@ const Projects = ({ githubService }: ProjectsProps) => {
 	};
 
 	return (
-		<ProjectsContainer>
+		<ProjectsContainer ref={container}>
 			{repos.map((repo) => (
 				<Project key={`${repo.name}-${repo.updated_at}`}>
 					<ProjectDate>

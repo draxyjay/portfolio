@@ -1,11 +1,12 @@
 import anime from 'animejs';
 import { RefObject } from 'react';
 
-export const slideInMenu = (navRef: React.RefObject<HTMLElement>) =>
+export const slideInMenu = (navigator: React.RefObject<HTMLElement>) =>
 	anime({
-		targets: navRef.current,
+		targets: navigator.current,
 		easing: 'easeOutQuad',
 		opacity: [0, 1],
+		translateX: [-50, 0],
 		duration: 1000,
 		delay: 7000,
 	});

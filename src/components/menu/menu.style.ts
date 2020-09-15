@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { device } from '../../utils/deviceUtils';
 
 export const MenuContainer = styled.div`
 	position: absolute;
@@ -19,7 +20,7 @@ export const MenuContainer = styled.div`
 `;
 
 export const MenuLinkContainer = styled.div<{ active: boolean }>`
-	font-size: 13vh;
+	font-size: 96px;
 	text-transform: uppercase;
 
 	color: ${(props) => (props.active ? '#011627' : 'transparent')};
@@ -28,6 +29,11 @@ export const MenuLinkContainer = styled.div<{ active: boolean }>`
 
 	&:hover {
 		color: #011627;
+	}
+
+	@media ${device.tablet} {
+		font-size: 64px;
+		-webkit-text-stroke-width: 2px;
 	}
 `;
 

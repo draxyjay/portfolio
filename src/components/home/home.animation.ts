@@ -22,6 +22,7 @@ export const animateLogo = ({
 		})
 		.add({
 			targets: initialLogoPath.current?.childNodes,
+			left: -50,
 			stroke: '#238b95',
 			strokeDashoffset: [anime.setDashoffset, 0],
 			duration: 2000,

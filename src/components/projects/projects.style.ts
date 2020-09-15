@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { device } from '../../utils/deviceUtils';
 
 export const ProjectsContainer = styled.div`
 	display: flex;
@@ -21,6 +22,10 @@ export const Project = styled.div`
 	border-radius: 2px;
 	color: #f7f7df;
 	letter-spacing: 0.1em;
+
+	@media ${device.mobileL} {
+		width: 100%;
+	}
 `;
 
 export const ProjectDate = styled.div`

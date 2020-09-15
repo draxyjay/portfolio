@@ -1,6 +1,8 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './app.css';
+import { AppContainer } from './app.style';
+import LogoSpinner from './components/logospinner';
 import Nav from './components/nav';
 
 const Home = lazy(() => import('./components/home'));
@@ -16,21 +18,23 @@ export const Links = [
 ];
 
 const App = () => (
-	<Router>
-		<Nav />
-		<Suspense fallback={<div>Chargement...</div>}>
-			<Switch>
-				{Links.map((link, i) => (
-					<Route
-						key={link.path}
-						exact={i === 0}
-						path={link.path}
-						component={link.component}
-					/>
-				))}
-			</Switch>
-		</Suspense>
-	</Router>
+	<AppContainer>
+		<Router>
+			<Nav />
+			<Suspense fallback={<LogoSpinner />}>
+				<Switch>
+					{Links.map((link, i) => (
+						<Route
+							key={link.path}
+							exact={i === 0}
+							path={link.path}
+							component={link.component}
+						/>
+					))}
+				</Switch>
+			</Suspense>
+		</Router>
+	</AppContainer>
 );
 
 export default App;

@@ -1,3 +1,4 @@
+import { Page } from 'react-pdf';
 import styled from 'styled-components';
 
 export const PDFContainer = styled.div`
