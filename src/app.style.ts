@@ -9,6 +9,12 @@ export const AppContainer = styled.div`
 
 	display: flex;
 
+	& > div:nth-child(2) {
+		@media ${device.tablet} {
+			flex: 1;
+		}
+	}
+
 	@media ${device.tablet} {
 		flex-direction: column;
 	}
